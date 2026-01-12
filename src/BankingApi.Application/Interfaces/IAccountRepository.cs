@@ -10,7 +10,7 @@ namespace BankingApi.Application.Interfaces
     public interface IAccountRepository
     {
         Task AddAsync(Account account);
-        Task<Account> GetByAccountNumberAsync(string accountNumber);
+        Task<Account?> GetByAccountNumberAsync(string accountNumber);
         Task<IEnumerable<Account>> GetAllAsync();
         Task UpdateAsync(Account account);
     }
