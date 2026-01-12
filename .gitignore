@@ -419,3 +419,5 @@ FodyWeavers.xsd
 
 # Ignore generated database
 *.db
+*.db-shm
+*.db-wal
