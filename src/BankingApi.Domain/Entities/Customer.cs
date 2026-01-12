@@ -9,11 +9,13 @@ namespace BankingApi.Domain.Entities
     public class Customer
     {
         public Guid Id { get; private set; }
-        public string Name { get; private set; }
+        public string Name { get; private set; } = null!;
         public DateTime BirthDate { get; private set; }
         public Enums.Gender Gender { get; private set; }
         public decimal Income { get; private set; }
 
+        // Constructor for EF Core ONLY
+        private Customer() { }
         public Customer(string name, DateTime birthDate, Enums.Gender gender, decimal income)
         {
             Id = Guid.NewGuid();

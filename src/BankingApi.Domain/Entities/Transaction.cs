@@ -14,6 +14,8 @@ namespace BankingApi.Domain.Entities
         public decimal BalanceAfter { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
+        // Constructor for EF Core ONLY
+        private Transaction() { }
         public Transaction(Enums.TransactionType type, decimal amount, decimal balanceAfter) 
         { 
             Id = Guid.NewGuid();

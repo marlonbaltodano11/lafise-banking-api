@@ -10,14 +10,16 @@ namespace BankingApi.Domain.Entities
     public class Account
     {
         public Guid Id {  get; private set; }
-        public string AccountNumber { get; private set; }
-        public Customer Owner { get; private set; }
+        public string AccountNumber { get; private set; } = null!;
+        public Customer Owner { get; private set; } = null!;
         public decimal Balance { get; private set; }
 
 
         private readonly List<Transaction> _transactions = new();
         public IReadOnlyCollection<Transaction> Transactions => _transactions.AsReadOnly();
 
+        // Constructor for EF Core ONLY
+        private Account() { }
         public Account(Customer owner, string accountNumber, decimal initialBalance = 0) 
         {
             Id = Guid.NewGuid();
