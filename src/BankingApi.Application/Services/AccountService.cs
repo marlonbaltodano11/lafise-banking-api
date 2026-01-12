@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using BankingApi.Application.Interfaces;
+using BankingApi.Domain.Entities;
+
+namespace BankingApi.Application.Services
+{
+    public class AccountService
+    {
+        private readonly IAccountRepository _accountRepository;
+        private readonly ICustomerRepository _customerRepository;
+
+        public AccountService(IAccountRepository accountRepository, ICustomerRepository customerRepository)
+        {
+            _accountRepository = accountRepository;
+            _customerRepository = customerRepository;
+        }
+
+        public async Task<Account> CreateAccountAsync(Guid customerId, string accountNumber, decimal initialBalance = 0)
+        {
+            var customer = await _customerRepository.GetByIdAsync(customerId)
+                           ?? throw new ArgumentException("Customer not found");
+
+            var account = new Account(customer, accountNumber, initialBalance);
+            await _accountRepository.AddAsync(account);
+            return account;
+        }
+
+        public async Task DepositAsync(string accountNumber, decimal amount)
+        {
+            var account = await _accountRepository.GetByAccountNumberAsync(accountNumber)
+                          ?? throw new ArgumentException("Account not found");
+
+            account.Deposit(amount);
+            await _accountRepository.UpdateAsync(account);
+        }
+
+        public async Task WithdrawAsync(string accountNumber, decimal amount)
+        {
+            var account = await _accountRepository.GetByAccountNumberAsync(accountNumber)
+                          ?? throw new ArgumentException("Account not found");
+
+            account.Withdraw(amount);
+            await _accountRepository.UpdateAsync(account);
+        }
+
+        public async Task<decimal> GetBalanceAsync(string accountNumber)
+        {
+            var account = await _accountRepository.GetByAccountNumberAsync(accountNumber)
+                          ?? throw new ArgumentException("Account not found");
+
+            return account.Balance;
+        }
+
+        public async Task<Transaction[]> GetTransactionHistoryAsync(string accountNumber)
+        {
+            var account = await _accountRepository.GetByAccountNumberAsync(accountNumber)
+                          ?? throw new ArgumentException("Account not found");
+
+            return account.Transactions.ToArray();
+        }
+    }
+}
