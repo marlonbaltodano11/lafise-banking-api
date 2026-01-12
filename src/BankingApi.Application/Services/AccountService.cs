@@ -27,9 +27,15 @@ namespace BankingApi.Application.Services
             var customer = await _customerRepository.GetByIdAsync(customerId)
                            ?? throw new ArgumentException("Customer not found");
 
-            string accountNumber = await _accountNumberGenerator.GenerateAsync();
-            var account = new Account(customer, accountNumber, initialBalance);
+            var accountNumber = await _accountNumberGenerator.GenerateAsync();
+            var account = new Account(customer, accountNumber, 0);
             await _accountRepository.AddAsync(account);
+
+            if (initialBalance > 0)
+            {
+                account.Deposit(initialBalance);
+            }
+
             return account;
         }
 
