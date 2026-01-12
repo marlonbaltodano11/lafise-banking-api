@@ -33,7 +33,7 @@ namespace BankingApi.Domain.Entities
             if (amount <= 0) throw new ArgumentException("Deposit amount must be positive");
 
             Balance += amount;
-            var transaction = new Transaction(Enums.TransactionType.Deposit, amount, Balance);
+            var transaction = new Transaction(Enums.TransactionType.Deposit, amount, Balance, this.Id);
             _transactions.Add(transaction);
         }
 
@@ -43,7 +43,7 @@ namespace BankingApi.Domain.Entities
             if (Balance < amount) throw new InsufficientFundsException(amount, Balance);
 
             Balance -= amount;
-            var transaction = new Transaction(Enums.TransactionType.Withdrawal, amount, Balance);
+            var transaction = new Transaction(Enums.TransactionType.Withdrawal, amount, Balance, this.Id);
             _transactions.Add(transaction);
         }
     }

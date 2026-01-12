@@ -31,7 +31,11 @@ namespace BankingApi.Infrastructure.Persistence.Configurations
 
             builder.HasMany(x => x.Transactions)
                    .WithOne()
+                   .HasForeignKey(x => x.AccountId)
                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Navigation(x => x.Transactions)
+                   .UsePropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

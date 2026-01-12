@@ -16,6 +16,9 @@ namespace BankingApi.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(x => x.Id);
 
+            builder.Property(x => x.Id)
+                   .ValueGeneratedNever();
+
             builder.Property(x => x.Amount)
                    .HasPrecision(18, 2);
 
