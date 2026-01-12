@@ -24,18 +24,20 @@ namespace BankingApi.Application.Services
 
         public async Task<Account> CreateAccountAsync(Guid customerId, decimal initialBalance = 0)
         {
+            if (initialBalance < 0) throw new ArgumentException("Initial balance cannot be negative");
+
             var customer = await _customerRepository.GetByIdAsync(customerId)
                            ?? throw new ArgumentException("Customer not found");
 
             var accountNumber = await _accountNumberGenerator.GenerateAsync();
             var account = new Account(customer, accountNumber, 0);
-            await _accountRepository.AddAsync(account);
 
             if (initialBalance > 0)
             {
                 account.Deposit(initialBalance);
             }
 
+            await _accountRepository.AddAsync(account);
             return account;
         }
 
