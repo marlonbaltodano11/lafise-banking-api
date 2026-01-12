@@ -1,3 +1,4 @@
+using BankingApi.Api.Middleware;
 using BankingApi.Application.Interfaces;
 using BankingApi.Application.Services;
 using BankingApi.Infrastructure;
@@ -26,6 +27,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.MapControllers();
 
 app.Run();
