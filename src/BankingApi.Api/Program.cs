@@ -1,3 +1,5 @@
+using BankingApi.Application.Interfaces;
+using BankingApi.Application.Services;
 using BankingApi.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddScoped<IAccountNumberGenerator, AccountNumberGenerator>();
+builder.Services.AddScoped<AccountService>();
 
 var app = builder.Build();
 

@@ -13,18 +13,21 @@ namespace BankingApi.Application.Services
     {
         private readonly IAccountRepository _accountRepository;
         private readonly ICustomerRepository _customerRepository;
+        private readonly IAccountNumberGenerator _accountNumberGenerator;
 
-        public AccountService(IAccountRepository accountRepository, ICustomerRepository customerRepository)
+        public AccountService(IAccountRepository accountRepository, ICustomerRepository customerRepository, IAccountNumberGenerator accountNumberGenerator)
         {
             _accountRepository = accountRepository;
             _customerRepository = customerRepository;
+            _accountNumberGenerator = accountNumberGenerator;
         }
 
-        public async Task<Account> CreateAccountAsync(Guid customerId, string accountNumber, decimal initialBalance = 0)
+        public async Task<Account> CreateAccountAsync(Guid customerId, decimal initialBalance = 0)
         {
             var customer = await _customerRepository.GetByIdAsync(customerId)
                            ?? throw new ArgumentException("Customer not found");
 
+            string accountNumber = await _accountNumberGenerator.GenerateAsync();
             var account = new Account(customer, accountNumber, initialBalance);
             await _accountRepository.AddAsync(account);
             return account;
