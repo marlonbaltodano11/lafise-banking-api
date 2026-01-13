@@ -46,5 +46,19 @@ namespace BankingApi.Domain.Entities
             var transaction = new Transaction(Enums.TransactionType.Withdrawal, amount, Balance, this.Id);
             _transactions.Add(transaction);
         }
+
+        public void ApplyInterest(decimal interestRate)
+        {
+            if (interestRate <= 0) throw new ArgumentException("Interest rate must be positive");
+
+            decimal interestAmount = Balance * interestRate;
+            interestAmount = Math.Round(interestAmount, 2);
+
+            if (interestAmount == 0) return;
+
+            Balance += interestAmount;
+            var transaction = new Transaction(Enums.TransactionType.InterestApplied, interestAmount, Balance, this.Id);
+            _transactions.Add(transaction);
+        }
     }
 }
