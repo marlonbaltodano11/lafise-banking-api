@@ -48,6 +48,17 @@ namespace BankingApi.Api.Middleware
                     );
                     break;
 
+                case NotFoundException:
+                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                    response.Errors.Add(
+                        new ApiError
+                        {
+                            Code = "NOT_FOUND",
+                            Message = exception.Message
+                        }
+                    );
+                    break;
+
                 case ArgumentException:
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     response.Errors.Add(
