@@ -21,6 +21,7 @@ namespace BankingApi.Infrastructure.Persistence.Configurations
                    .HasMaxLength(200);
 
             builder.Property(x => x.Income)
+                   .IsRequired()
                    .HasPrecision(18, 2);
         }
     }

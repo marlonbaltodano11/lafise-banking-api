@@ -17,7 +17,8 @@ namespace BankingApi.Infrastructure.Persistence.Configurations
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.AccountNumber)
-                   .IsRequired();
+                   .IsRequired()
+                   .HasMaxLength(9);
 
             builder.HasIndex(x => x.AccountNumber)
                    .IsUnique();

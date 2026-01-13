@@ -20,9 +20,11 @@ namespace BankingApi.Infrastructure.Persistence.Configurations
                    .ValueGeneratedNever();
 
             builder.Property(x => x.Amount)
+                   .IsRequired()
                    .HasPrecision(18, 2);
 
             builder.Property(x => x.BalanceAfter)
+                   .IsRequired()
                    .HasPrecision(18, 2);
         }
     }

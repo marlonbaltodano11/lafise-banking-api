@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\BankingApi.Application\BankingApi.Application.csproj" />
+    <ProjectReference Include="..\..\src\BankingApi.Domain\BankingApi.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
