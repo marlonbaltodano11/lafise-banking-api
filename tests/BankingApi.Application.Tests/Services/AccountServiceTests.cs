@@ -58,7 +58,7 @@ namespace BankingApi.Application.Tests.Services
         }
 
         [Fact]
-        public async Task CreateAccountAsync_WithInvalidCustomer_ThrowsArgumentException()
+        public async Task CreateAccountAsync_WithInvalidCustomer_ThrowsNotFoundException()
         {
             // Arrange
             var customerId = Guid.NewGuid();
@@ -68,7 +68,7 @@ namespace BankingApi.Application.Tests.Services
                 .Returns((Customer?)null);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() =>
+            await Assert.ThrowsAsync<NotFoundException>(() =>
                 _service.CreateAccountAsync(customerId, 500m)
             );
         }
@@ -114,7 +114,7 @@ namespace BankingApi.Application.Tests.Services
         }
 
         [Fact]
-        public async Task DepositAsync_WithInvalidAccount_ThrowsArgumentException()
+        public async Task DepositAsync_WithInvalidAccount_ThrowsNotFoundException()
         {
             // Arrange
             var accountNumber = "invalid-account";
@@ -124,7 +124,7 @@ namespace BankingApi.Application.Tests.Services
                 .Returns((Account?)null);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() =>
+            await Assert.ThrowsAsync<NotFoundException>(() =>
                 _service.DepositAsync(accountNumber, 200m)
             );
         }
@@ -176,7 +176,7 @@ namespace BankingApi.Application.Tests.Services
         }
 
         [Fact]
-        public async Task WithdrawAsync_WithInvalidAccount_ThrowsArgumentException()
+        public async Task WithdrawAsync_WithInvalidAccount_ThrowsNotFoundException()
         {
             // Arrange
             var accountNumber = "invalid-account";
@@ -186,7 +186,7 @@ namespace BankingApi.Application.Tests.Services
                 .Returns((Account?)null);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() =>
+            await Assert.ThrowsAsync<NotFoundException>(() =>
                 _service.WithdrawAsync(accountNumber, 100m)
             );
         }
@@ -255,7 +255,7 @@ namespace BankingApi.Application.Tests.Services
         }
 
         [Fact]
-        public async Task GetBalanceAsync_WithInvalidAccount_ThrowsArgumentException()
+        public async Task GetBalanceAsync_WithInvalidAccount_ThrowsNotFoundException()
         {
             // Arrange
             var accountNumber = "invalid-account";
@@ -265,7 +265,7 @@ namespace BankingApi.Application.Tests.Services
                 .Returns((Account?)null);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() =>
+            await Assert.ThrowsAsync<NotFoundException>(() =>
                 _service.GetBalanceAsync(accountNumber)
             );
         }
@@ -295,7 +295,7 @@ namespace BankingApi.Application.Tests.Services
         }
 
         [Fact]
-        public async Task GetTransactionsAsync_WithInvalidAccount_ThrowsArgumentException()
+        public async Task GetTransactionsAsync_WithInvalidAccount_ThrowsNotFoundException()
         {
             // Arrange
             var accountNumber = "invalid-account";
@@ -305,7 +305,7 @@ namespace BankingApi.Application.Tests.Services
                 .Returns((Account?)null);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() =>
+            await Assert.ThrowsAsync<NotFoundException>(() =>
                 _service.GetTransactionHistoryAsync(accountNumber)
             );
         }
